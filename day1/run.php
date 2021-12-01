@@ -1,12 +1,11 @@
 <?php
 
-
 use src\Submarine;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $submarine = new Submarine();
 
-$list = $submarine->read('input.txt');
+$list = $submarine->read(__DIR__ . '/../resources/input_1.txt');
 
 # 1.
 $submarine->depth($list);
