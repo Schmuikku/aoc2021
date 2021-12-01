@@ -4,8 +4,6 @@ namespace src;
 
 class Submarine
 {
-
-
     final public function read(string $file): array
     {
         $list = [];
@@ -36,10 +34,6 @@ class Submarine
         echo 'Increased ' . $increase . ' times' . PHP_EOL;
     }
 
-    /**
-     * @param array $list
-     * @return array
-     */
     final public function aggregate(array $list): array
     {
         foreach ($list as $key => $val) {
