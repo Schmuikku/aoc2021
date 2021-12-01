@@ -6,11 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $submarine = new Submarine();
 
 $list = $submarine->read(__DIR__ . '/../resources/input_1.txt');
-
 # 1.
-$submarine
-    ->depth($list);
-
+$submarine->depth($list);
 # 2.
-$submarine
-    ->depth($submarine->aggregate($list));
+$submarine->depth($submarine->aggregate($list));
