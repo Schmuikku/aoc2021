@@ -12,6 +12,5 @@ $submarine
     ->depth($list);
 
 # 2.
-
 $submarine
     ->depth($submarine->aggregate($list));
