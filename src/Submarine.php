@@ -4,35 +4,35 @@ namespace src;
 
 class Submarine
 {
-    private array $_list;
+
 
     final public function read(string $file): array
     {
+        $list = [];
+
         $handle = fopen($file, 'rb');
         if ($handle) {
             while (($line = fgets($handle)) !== false) {
-                $this->_list[] = $line;
+                $list[] = $line;
             }
             fclose($handle);
         }
-        return $this->_list;
+
+        return $list;
     }
 
-    /**
-     * @param array $file
-     * @return void
-     */
-    final public function depth(array $file): void
+    final public function depth(array $list): void
     {
         $increase = 0;
         $previous = null;
 
-        foreach ($file as $line) {
+        foreach ($list as $line) {
             if (isset($previous) && $previous < (int)$line) {
                 $increase++;
             }
             $previous = (int)$line;
         }
+
         echo 'Increased ' . $increase . ' times' . PHP_EOL;
     }
 

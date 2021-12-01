@@ -8,8 +8,10 @@ $submarine = new Submarine();
 $list = $submarine->read(__DIR__ . '/../resources/input_1.txt');
 
 # 1.
-$submarine->depth($list);
+$submarine
+    ->depth($list);
 
 # 2.
-$sum = $submarine->aggregate($list);
-$submarine->depth($sum);
+
+$submarine
+    ->depth($submarine->aggregate($list));
