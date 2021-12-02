@@ -2,8 +2,10 @@
 
 namespace src;
 
-class Submarine
+class Submarine extends Steering implements Location
 {
+    private int $_increase = 0;
+
     final public function read(string $file): array
     {
         $list = [];
@@ -21,17 +23,19 @@ class Submarine
 
     final public function depth(array $list): void
     {
-        $increase = 0;
         $previous = null;
 
         foreach ($list as $line) {
             if (isset($previous) && $previous < (int)$line) {
-                $increase++;
+                $this->_increase++;
             }
             $previous = (int)$line;
         }
+    }
 
-        echo 'Increased ' . $increase . ' times' . PHP_EOL;
+    final public function getIncreased(): int
+    {
+        return $this->_increase;
     }
 
     final public function aggregate(array $list): array
@@ -45,55 +49,44 @@ class Submarine
         return $sum ?? [];
     }
 
-    final public function move(array $coordinates): void
+    final public function move(array $coordinates): self
     {
-        $horizontal = 0;
-        $depth = 0;
         foreach ($coordinates as $val) {
             [$move, $step] = explode(' ', $val);
-            switch ($move) {
-                case 'forward':
-                    $horizontal += (int)$step;
-                    break;
-                case 'up':
-                    $depth -= (int)$step;
-                    break;
-                case 'down':
-                    $depth += (int)$step;
-                    break;
-                default:
-            }
+
+            match (strtoupper($move)) {
+                'UP' => $this->up($step),
+                'DOWN' => $this->down($step),
+                'FORWARD' => $this->forward($step),
+            };
         }
 
-        echo 'Horizontal ' . $horizontal . ' Depth ' . $depth . PHP_EOL;
-        echo 'Multiplying ' . ($horizontal * $depth) . PHP_EOL;
+        return $this;
     }
 
-    final public function moveWithAim(array $coordinates): void
+    final public function moveExtended(array $coordinates): self
     {
-        $aim = 0;
-        $depth = 0;
-        $horizontal = 0;
-
         foreach ($coordinates as $val) {
             [$move, $step] = explode(' ', $val);
-            $step = (int)$step;
-            switch ($move) {
-                case 'forward':
-                    $horizontal += $step;
-                    $depth += $step * $aim;
-                    break;
-                case 'up':
-                    $aim -= $step;
-                    break;
-                case 'down':
-                    $aim += $step;
-                    break;
-                default:
-            }
+
+            match (strtoupper($move)) {
+                'UP' => $this->aim(-$step),
+                'DOWN' => $this->aim($step),
+                'FORWARD' => $this->aimForward($step),
+            };
         }
 
-        echo 'Horizontal ' . $horizontal . ' Depth ' . $depth . PHP_EOL;
-        echo 'Multiplying ' . ($horizontal * $depth) . PHP_EOL;
+        return $this;
+    }
+
+    final public function resetIncreased(): void
+    {
+        $this->_increase = 0;
+    }
+
+    final public function printCoordinates(): void
+    {
+        echo 'Horizontal ' . $this->getHorizontal() . ' Depth ' . $this->getDepth() . PHP_EOL;
+        echo 'Multiplying ' . ($this->getHorizontal() * $this->getDepth()) . PHP_EOL;
     }
 }

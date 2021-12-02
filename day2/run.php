@@ -7,6 +7,9 @@ $submarine = new Submarine();
 
 $coordinates = $submarine->read(__DIR__ . '/../resources/input_2.txt');
 # 1.
-$submarine->move($coordinates);
+$submarine # move and then print current location
+    ->move($coordinates)->printCoordinates();
+$submarine->resetCoordinates();
 # 2.
-$submarine->moveWithAim($coordinates);
+$submarine # move with aim included and print location
+    ->moveExtended($coordinates)->printCoordinates();
