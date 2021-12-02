@@ -44,4 +44,56 @@ class Submarine
 
         return $sum ?? [];
     }
+
+    final public function move(array $coordinates): void
+    {
+        $horizontal = 0;
+        $depth = 0;
+        foreach ($coordinates as $val) {
+            [$move, $step] = explode(' ', $val);
+            switch ($move) {
+                case 'forward':
+                    $horizontal += (int)$step;
+                    break;
+                case 'up':
+                    $depth -= (int)$step;
+                    break;
+                case 'down':
+                    $depth += (int)$step;
+                    break;
+                default:
+            }
+        }
+
+        echo 'Horizontal ' . $horizontal . ' Depth ' . $depth . PHP_EOL;
+        echo 'Multiplying ' . ($horizontal * $depth) . PHP_EOL;
+    }
+
+    final public function moveWithAim(array $coordinates): void
+    {
+        $aim = 0;
+        $depth = 0;
+        $horizontal = 0;
+
+        foreach ($coordinates as $val) {
+            [$move, $step] = explode(' ', $val);
+            $step = (int)$step;
+            switch ($move) {
+                case 'forward':
+                    $horizontal += $step;
+                    $depth += $step * $aim;
+                    break;
+                case 'up':
+                    $aim -= $step;
+                    break;
+                case 'down':
+                    $aim += $step;
+                    break;
+                default:
+            }
+        }
+
+        echo 'Horizontal ' . $horizontal . ' Depth ' . $depth . PHP_EOL;
+        echo 'Multiplying ' . ($horizontal * $depth) . PHP_EOL;
+    }
 }
