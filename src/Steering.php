@@ -4,9 +4,9 @@ namespace src;
 
 class Steering
 {
-    protected int $_horizontal = 0;
-    protected int $_depth = 0;
     protected int $_aim = 0;
+    protected int $_depth = 0;
+    protected int $_horizontal = 0;
 
     final public function forward(int $step): void
     {
