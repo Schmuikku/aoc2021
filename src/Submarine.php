@@ -92,8 +92,29 @@ class Submarine extends Steering implements Location
         echo 'Multiplying ' . ($this->getHorizontal() * $this->getDepth()) . PHP_EOL;
     }
 
+    final public function consumeResources(array $data, int $length, string $resource): array
+    {
+        for ($i = 0; $i < $length; $i++) {
+            if (count($data) === 1) {
+                break;
+            }
+            $result = $this->lifeSupport($data);
+            $binary = $result['binary'];
+            $counter = $result['counter'];
+            $most = self::type($resource, (int)$binary[$i], $counter);
+            foreach ($data as $step => $row) {
+                if ($most !== (bool)$row[$i]) {
+                    unset($data[$step]);
+                }
+            }
+            sort($data);
+        }
+
+        return $data;
+    }
+
     #[ArrayShape(['binary' => "array", 'counter' => "int", 'length' => "int"])]
-    final public function binary(array $list): array
+    final public function lifeSupport(array $list): array
     {
         $counter = $length = 0;
         foreach ($list as $row) {
@@ -111,5 +132,16 @@ class Submarine extends Steering implements Location
         }
 
         return ['binary' => $binary ?? [], 'counter' => $counter, 'length' => $length];
+    }
+
+    private static function type(string $resource, int $binary, int $counter): bool
+    {
+        if ($resource === 'air') {
+            $oxygen = $binary >= $counter / 2;
+        } else {
+            $oxygen = $binary < $counter / 2;
+        }
+
+        return $oxygen;
     }
 }
