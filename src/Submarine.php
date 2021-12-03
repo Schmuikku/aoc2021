@@ -92,8 +92,9 @@ class Submarine extends Steering implements Location
         echo 'Multiplying ' . ($this->getHorizontal() * $this->getDepth()) . PHP_EOL;
     }
 
-    final public function consumeResources(array $data, int $length, string $resource): array
+    final public function consumeResources(array $data, string $resource): array
     {
+        $length = strlen($data[0]);
         for ($i = 0; $i < $length; $i++) {
             if (count($data) === 1) {
                 break;
@@ -139,5 +140,18 @@ class Submarine extends Steering implements Location
         }
 
         return $oxygen;
+    }
+
+    #[ArrayShape(['gamma' => "array", 'epsilon' => "array"])]
+    final public function motorRadiation(array $motor): array
+    {
+        $result = $this->lifeSupport($motor);
+
+        foreach ($result['binary'] as $step => $bit) {
+            $gamma[$step] = (int)$bit > $result['counter'] / 2 ? 1 : 0;
+            $epsilon[$step] = (int)$bit < $result['counter'] / 2 ? 1 : 0;
+        }
+
+        return ['gamma' => $gamma ?? [], 'epsilon' => $epsilon ?? []];
     }
 }
