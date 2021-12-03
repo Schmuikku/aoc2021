@@ -99,9 +99,7 @@ class Submarine extends Steering implements Location
                 break;
             }
             $result = $this->lifeSupport($data);
-            $binary = $result['binary'];
-            $counter = $result['counter'];
-            $most = self::type($resource, (int)$binary[$i], $counter);
+            $most = self::type($resource, (int)$result['binary'][$i], $result['counter']);
             foreach ($data as $step => $row) {
                 if ($most !== (bool)$row[$i]) {
                     unset($data[$step]);
@@ -116,12 +114,10 @@ class Submarine extends Steering implements Location
     #[ArrayShape(['binary' => "array", 'counter' => "int", 'length' => "int"])]
     final public function lifeSupport(array $list): array
     {
-        $counter = $length = 0;
+        $counter = 0;
+        $length = strlen($list[0]);
         foreach ($list as $row) {
             $data = str_split(trim($row));
-            if ($length === 0) {
-                $length = count($data);
-            }
             foreach ($data as $step => $bit) {
                 if (empty($binary[$step])) {
                     $binary[$step] = 0;
