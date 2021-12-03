@@ -2,6 +2,8 @@
 
 namespace src;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 class Submarine extends Steering implements Location
 {
     private int $_increase = 0;
@@ -88,5 +90,26 @@ class Submarine extends Steering implements Location
     {
         echo 'Horizontal ' . $this->getHorizontal() . ' Depth ' . $this->getDepth() . PHP_EOL;
         echo 'Multiplying ' . ($this->getHorizontal() * $this->getDepth()) . PHP_EOL;
+    }
+
+    #[ArrayShape(['binary' => "array", 'counter' => "int", 'length' => "int"])]
+    final public function binary(array $list): array
+    {
+        $counter = $length = 0;
+        foreach ($list as $row) {
+            $data = str_split(trim($row));
+            if ($length === 0) {
+                $length = count($data);
+            }
+            foreach ($data as $step => $bit) {
+                if (empty($binary[$step])) {
+                    $binary[$step] = 0;
+                }
+                @$binary[$step] += (int)$bit;
+            }
+            $counter++;
+        }
+
+        return ['binary' => $binary ?? [], 'counter' => $counter, 'length' => $length];
     }
 }
