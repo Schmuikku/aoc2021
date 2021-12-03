@@ -55,7 +55,6 @@ class Submarine extends Steering implements Location
     {
         foreach ($coordinates as $val) {
             [$move, $step] = explode(' ', $val);
-
             match (strtoupper($move)) {
                 'UP' => $this->up($step),
                 'DOWN' => $this->down($step),
@@ -70,7 +69,6 @@ class Submarine extends Steering implements Location
     {
         foreach ($coordinates as $val) {
             [$move, $step] = explode(' ', $val);
-
             match (strtoupper($move)) {
                 'UP' => $this->aim(-$step),
                 'DOWN' => $this->aim($step),
