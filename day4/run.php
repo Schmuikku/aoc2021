@@ -29,14 +29,14 @@ $numbers = array_map('intval', explode(',', $numbers[0]));
 foreach ($numbers as $hit) {
     foreach ($bingo as $c => $card) {
         $unmarked = 0;
-        foreach ($card as $rowNumber => $row) {
+        foreach ($card as $rows => $row) {
             foreach ($row as $key => $val) {
                 $last = $key;
                 if ($hit === (int)$key) {
-                    $bingo[$c][$rowNumber][$key] = 1;
+                    $bingo[$c][$rows][$key] = 1;
                 }
                 $column = Bingo::column($bingo[$c]);
-                if ($column || array_sum($bingo[$c][$rowNumber]) === 5) {
+                if ($column || array_sum($bingo[$c][$rows]) === 5) {
                     foreach ($bingo[$c] as $winning) {
                         foreach ($winning as $sum => $value) {
                             if (!$value) {
