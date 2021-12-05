@@ -1,0 +1,19 @@
+{
+    "name": "svuorenm/aoc2021",
+    "autoload": {
+        "psr-4": {
+            "src\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "svuorenm",
+            "email": "sami.vuorenmaa@opr-finance.fi"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "config": {
+        "optimize-autoloader": true
+    }
+}
