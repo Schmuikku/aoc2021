@@ -29,7 +29,7 @@ foreach ($points as $point) {
 
     $x = range($x1, $x2);
     $y = range($y1, $y2);
-    if (count($x) === count($y)) {
+    if (count(range($x1, $x2)) === count(range($y1, $y2))) {
         $times = count($x);
         for ($i = 0; $i < $times; $i++) {
             @$map3dimension[$y[$i]][$x[$i]] += 1;
